@@ -166,9 +166,9 @@ function fieldAt(x, y, z, out) {
 const stage = $('stage'), canvas = $('cv3d');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-renderer.setClearColor(0x070b17, 1);
+renderer.setClearColor(0x06080c, 1);
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x070b17, 16, 34);
+scene.fog = new THREE.Fog(0x06080c, 16, 34);
 const camera = new THREE.PerspectiveCamera(42, 1, 0.05, 200);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.08;

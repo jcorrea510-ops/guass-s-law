@@ -13,10 +13,6 @@
 
 <main class="lab wide-side">
   <aside class="sidebar">
-    <div class="page-title">
-      <h1>3D Flux Explorer</h1>
-      <p>Gauss's law holds for <b>any</b> closed surface. The flux here is computed by brute-force numerical integration of E·dA over tens of thousands of patches.</p>
-    </div>
 
     <section class="panel">
       <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Result</h3>
@@ -59,8 +55,8 @@
     <section class="panel">
       <h3><span class="dot"></span>Point charges</h3>
       <div class="btn-group">
-        <button class="btn pos" id="addPos">＋ Add +</button>
-        <button class="btn neg" id="addNeg">− Add −</button>
+        <button class="btn pos" id="addPos">Add +</button>
+        <button class="btn neg" id="addNeg">Add −</button>
       </div>
       <div class="row" style="margin-top:8px">
         <select id="preset" aria-label="Preset">
@@ -83,19 +79,8 @@
         <div class="slider"><div class="top"><span>y</span><b id="syVal"></b></div><input type="range" id="sy" min="-4" max="4" step="0.05" value="0"></div>
         <div class="slider"><div class="top"><span>z</span><b id="szVal"></b></div><input type="range" id="sz" min="-4" max="4" step="0.05" value="0"></div>
       </div>
-      <p class="hint">Drag charges directly in 3D (they move parallel to the screen). Drag empty space to orbit.</p>
+      <p class="hint">Drag charges in 3D · drag empty space to orbit</p>
     </section>
-
-    <details class="panel notes">
-      <summary>What to notice</summary>
-      <ul>
-        <li>Change the <b>shape</b> or <b>size</b> of the surface: the total flux doesn't change as long as the same charges are enclosed.</li>
-        <li>A charge outside contributes <b>zero net flux</b>: the field lines it sends in come back out (blue patches balance orange ones).</li>
-        <li>But outside charges <b>do</b> change E on the surface — the colouring changes even though Φ does not.</li>
-        <li>Orange dots mark field lines leaving the surface, blue dots lines entering. Lines from an outside charge that enter always leave again.</li>
-        <li>Move a charge across the surface and watch Φ jump by q/ε₀.</li>
-      </ul>
-    </details>
   </aside>
 
   <div class="stage" id="stage">

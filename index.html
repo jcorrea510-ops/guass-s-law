@@ -4,211 +4,213 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Electrostatics Lab</title>
-<meta name="description" content="Interactive Gauss's law and electric field simulations for AP Physics C: Electricity & Magnetism.">
-<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<meta name="description" content="Interactive electric field and Gauss's law simulations for AP Physics C: E&M.">
 <link rel="stylesheet" href="css/style.css">
-<style>
-  .feature-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 8px; }
-  .feature-row .panel { padding: 14px; }
-  .feature-row b { display: block; font-size: 14px; margin-bottom: 4px; }
-  .feature-row span { color: var(--muted); font-size: 13px; }
-  .sheet .panel { display: flex; flex-direction: column; }
-  .sheet .panel .try { margin-top: auto; padding-top: 10px; font-size: 13.5px; font-weight: 600; }
-  .stats { display: flex; gap: 22px; margin-top: 22px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
-  .stats b { color: var(--text); font-size: 20px; display: block; }
-  @media (max-width: 960px) { .feature-row { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 520px) { .feature-row { grid-template-columns: 1fr; } }
-</style>
 </head>
 <body>
 <header id="nav"></header>
 
-<div class="wrap">
-  <section class="hero">
-    <div>
-      <span class="tag">AP Physics C · Electricity &amp; Magnetism</span>
-      <h1>See the <span class="grad">electric field</span>.<br>Prove Gauss's law.</h1>
-      <p class="lead">Four interactive labs covering electrostatics: fields and field lines, potential and equipotentials, flux, Gauss's law for every symmetry, conductors, and continuous charge distributions — all computed live from the physics.</p>
-      <div class="cta">
-        <a class="btn primary" href="gauss.html">Open Gauss's Law Lab →</a>
-        <a class="btn" href="field.html">Electric Field Lab</a>
-      </div>
-      <div class="stats">
-        <div><b>13</b>Gauss's-law configurations</div>
-        <div><b>~45 000</b>patches per flux integral</div>
-        <div><b>0</b>installs — runs in the browser</div>
-      </div>
-    </div>
-    <canvas id="heroCv" aria-label="Animated electric field lines"></canvas>
-  </section>
-
-  <section class="cards">
-    <a class="card" href="field.html">
-      <div class="icon">⚡</div>
-      <h3>Electric Field Lab</h3>
-      <p>Drag point charges and watch the field update in real time.</p>
-      <ul>
-        <li>Field lines, vector field, equipotentials, potential map</li>
-        <li>E and V probes, voltmeter, work W = qΔV</li>
-        <li>Coulomb forces between charges</li>
-        <li>Launch test charges; K + U is conserved</li>
-      </ul>
+<main class="home">
+  <div class="home-head">
+    <h1>Electrostatics Lab</h1>
+    <p>AP PHYSICS C · E&amp;M · SIMULATIONS</p>
+  </div>
+  <div class="tiles">
+    <a class="tile" href="field.html">
+      <canvas data-kind="field" aria-hidden="true"></canvas>
+      <div class="tile-body"><span class="num">01</span><div><h2>Electric Field</h2><p>Field lines, equipotentials, probes, test charges</p></div><span class="go">→</span></div>
     </a>
-    <a class="card" href="gauss.html">
-      <div class="icon">◎</div>
-      <h3>Gauss's Law Lab</h3>
-      <p>Grow a Gaussian surface through a charge distribution in 3D.</p>
-      <ul>
-        <li>Spheres, cylinders, planes, coax, capacitor</li>
-        <li>Conductors, cavities and induced charge</li>
-        <li>Non-uniform density ρ = Ar</li>
-        <li>Live Q<sub>enc</sub>, flux, E(r), V(r) and derivation</li>
-      </ul>
+    <a class="tile" href="gauss.html">
+      <canvas data-kind="gauss" aria-hidden="true"></canvas>
+      <div class="tile-body"><span class="num">02</span><div><h2>Gauss's Law</h2><p>13 symmetric distributions in 3D, E(r) and V(r)</p></div><span class="go">→</span></div>
     </a>
-    <a class="card" href="flux.html">
-      <div class="icon">◈</div>
-      <h3>3D Flux Explorer</h3>
-      <p>Integrate E·dA numerically over any closed surface.</p>
-      <ul>
-        <li>Sphere, cube, cylinder, ellipsoid, irregular blob</li>
-        <li>Outside charges give zero net flux</li>
-        <li>Surface coloured by E·n̂; field-line crossings</li>
-      </ul>
+    <a class="tile" href="flux.html">
+      <canvas data-kind="flux" aria-hidden="true"></canvas>
+      <div class="tile-body"><span class="num">03</span><div><h2>Flux Explorer</h2><p>Numerical ∮E·dA over any closed surface</p></div><span class="go">→</span></div>
     </a>
-  </section>
-  <section class="cards" style="grid-template-columns: 1fr; margin-top: 0">
-    <a class="card" href="distributions.html" style="display:grid; grid-template-columns:auto 1fr; gap: 6px 18px; align-items:start">
-      <div class="icon" style="grid-row: span 2">∫</div>
-      <h3 style="margin:0">Continuous Charge Distributions</h3>
-      <p style="margin:0">Rod, ring, disk and arc: slice into dq, add every dE as a vector (tip-to-tail), and watch the Riemann sum converge to the exact integral — with the limiting cases (infinite line, sheet, point charge) on the graph.</p>
+    <a class="tile" href="distributions.html">
+      <canvas data-kind="dist" aria-hidden="true"></canvas>
+      <div class="tile-body"><span class="num">04</span><div><h2>Continuous Charges</h2><p>Rod, ring, disk, arc — summing dE</p></div><span class="go">→</span></div>
     </a>
-  </section>
+  </div>
+</main>
 
-  <section class="section">
-    <h2>Electrostatics, at a glance</h2>
-    <p class="sub">The core relationships you need for AP Physics C: E&amp;M — each linked to the lab where you can see it happen.</p>
-    <div class="sheet">
-      <div class="panel">
-        <h4>Coulomb's law &amp; superposition</h4>
-        <div class="formula"><span data-tex="\begin{gathered}\vec F = k\frac{q_1q_2}{r^2}\hat r\\ k=\frac{1}{4\pi\varepsilon_0}=8.99\times10^9\ \text{N}\cdot\text{m}^2/\text{C}^2\end{gathered}" data-display></span></div>
-        <p>Forces and fields from several charges add as <b>vectors</b>.</p>
-        <a class="try" href="field.html">Try it in the Electric Field Lab →</a>
-      </div>
-      <div class="panel">
-        <h4>Electric field</h4>
-        <div class="formula"><span data-tex="\vec E = \frac{\vec F}{q_0},\qquad \vec E=\int k\frac{dq}{r^2}\,\hat r" data-display></span></div>
-        <p>For continuous charge use <span data-tex="dq=\lambda\,d\ell,\ \sigma\,dA,\ \rho\,dV"></span> and exploit symmetry before integrating.</p>
-        <a class="try" href="distributions.html">Build one from dq →</a>
-      </div>
-      <div class="panel">
-        <h4>Electric flux &amp; Gauss's law</h4>
-        <div class="formula"><span data-tex="\Phi_E=\oint\vec E\cdot d\vec A=\frac{Q_{\text{enc}}}{\varepsilon_0}" data-display></span></div>
-        <p>Holds for every closed surface; it gives E directly only when symmetry makes E·dA simple.</p>
-        <a class="try" href="flux.html">Test any surface →</a>
-      </div>
-      <div class="panel">
-        <h4>Results from Gauss's law</h4>
-        <div class="formula"><span data-tex="\underbrace{E=\frac{kQ}{r^2}}_{\text{sphere, }r>R}\quad \underbrace{E=\frac{\lambda}{2\pi\varepsilon_0 r}}_{\text{line}}\quad \underbrace{E=\frac{\sigma}{2\varepsilon_0}}_{\text{sheet}}" data-display></span></div>
-        <div class="formula"><span data-tex="\text{Uniform sphere, } r<R:\ \ E=\frac{kQ}{R^3}\,r" data-display></span></div>
-        <a class="try" href="gauss.html">Sweep a Gaussian surface →</a>
-      </div>
-      <div class="panel">
-        <h4>Conductors in equilibrium</h4>
-        <p style="margin-top:0">E = 0 inside the metal · excess charge on the surface · the whole conductor is an equipotential · just outside, <span data-tex="E=\sigma/\varepsilon_0"></span> ⊥ surface · a charge in a cavity induces −q on the cavity wall.</p>
-        <a class="try" href="gauss.html#shellCavity">Charge inside a conducting shell →</a>
-      </div>
-      <div class="panel">
-        <h4>Electric potential</h4>
-        <div class="formula"><span data-tex="\begin{gathered}\Delta V=-\int_A^B\vec E\cdot d\vec\ell,\qquad \vec E=-\nabla V\\ V=\sum_i k\frac{q_i}{r_i}\end{gathered}" data-display></span></div>
-        <p>Potential energy <span data-tex="U=qV"></span>; work by the field <span data-tex="W=-q\Delta V"></span>. Equipotentials ⊥ field lines.</p>
-        <a class="try" href="field.html">Measure ΔV with the voltmeter →</a>
-      </div>
-      <div class="panel">
-        <h4>Capacitors</h4>
-        <div class="formula"><span data-tex="\begin{gathered}C=\frac{Q}{\Delta V},\qquad U=\tfrac12 CV^2\\ C_{\text{plates}}=\frac{\varepsilon_0A}{d},\qquad C_{\text{coax}}=\frac{2\pi\varepsilon_0 L}{\ln(b/a)}\end{gathered}" data-display></span></div>
-        <p>Find E with Gauss's law, integrate to get ΔV, then C = Q/ΔV.</p>
-        <a class="try" href="gauss.html#capacitor">Parallel plates in the Gauss Lab →</a>
-      </div>
-      <div class="panel">
-        <h4>Charges in motion</h4>
-        <div class="formula"><span data-tex="\vec a=\frac{q\vec E}{m},\qquad K_i+qV_i=K_f+qV_f" data-display></span></div>
-        <p>Positive charges accelerate toward lower V, negative charges toward higher V.</p>
-        <a class="try" href="field.html">Launch a test charge →</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    Electrostatics Lab — built for AP Physics C: Electricity &amp; Magnetism students. All fields are computed live in your browser from Coulomb's law and Gauss's law; nothing is pre-rendered.
-    Uses <a href="https://threejs.org">three.js</a> and <a href="https://katex.org">KaTeX</a>.
-  </footer>
-</div>
-
-<script src="vendor/katex/katex.min.js"></script>
 <script src="js/common.js"></script>
 <script>
 EL.buildNav('home');
-EL.renderAllTex();
-// ---- animated hero: two orbiting charges with live field lines ----
 (function () {
-  const cv = document.getElementById('heroCv'), ctx = cv.getContext('2d');
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let t = 0;
-  function charges(t) {
-    const a = t * 0.35;
-    return [
-      { x: Math.cos(a) * 0.9, y: Math.sin(a) * 0.55, q: 1 },
-      { x: -Math.cos(a) * 0.9, y: -Math.sin(a) * 0.55, q: -1 },
-      { x: 0.35 * Math.sin(a * 1.7), y: 1.25 + 0.15 * Math.cos(a), q: 0.6 }
-    ];
-  }
-  function field(cs, x, y) {
-    let ex = 0, ey = 0;
-    for (const c of cs) { const dx = x - c.x, dy = y - c.y, r2 = dx * dx + dy * dy + 1e-6, r = Math.sqrt(r2); ex += c.q * dx / (r2 * r); ey += c.q * dy / (r2 * r); }
-    return [ex, ey];
-  }
-  function frame() {
-    const { w, h } = EL.fitCanvas(cv, ctx);
-    const s = Math.min(w, h) / 4.2, cx = w / 2, cy = h / 2 + s * 0.25;
-    ctx.fillStyle = '#070b17'; ctx.fillRect(0, 0, w, h);
-    const cs = charges(t);
-    // equipotential-ish glow
-    for (const c of cs) {
-      const g = ctx.createRadialGradient(cx + c.x * s, cy - c.y * s, 0, cx + c.x * s, cy - c.y * s, s * 0.9);
-      g.addColorStop(0, c.q > 0 ? 'rgba(255,93,93,0.22)' : 'rgba(77,163,255,0.22)'); g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-    }
-    ctx.lineWidth = 1.2; ctx.strokeStyle = 'rgba(226,233,255,0.6)';
+  const PI = Math.PI;
+  const fieldAt = (cs, x, y) => {
+    let ex = 0, ey = 0, v = 0;
+    for (const c of cs) { const dx = x - c.x, dy = y - c.y, r2 = dx * dx + dy * dy + 1e-6, r = Math.sqrt(r2); ex += c.q * dx / (r2 * r); ey += c.q * dy / (r2 * r); v += c.q / r; }
+    return [ex, ey, v];
+  };
+  function lines(ctx, T, cs, perQ, alpha = 0.55, onStep) {
+    ctx.strokeStyle = `rgba(226,231,240,${alpha})`; ctx.lineWidth = 1;
     for (const c of cs) {
       if (c.q <= 0) continue;
-      const n = Math.round(18 * c.q);
+      const n = Math.round(perQ * c.q);
       for (let k = 0; k < n; k++) {
-        const ang = 2 * Math.PI * (k + 0.5) / n + t * 0.1;
-        let x = c.x + Math.cos(ang) * 0.06, y = c.y + Math.sin(ang) * 0.06;
-        ctx.beginPath(); ctx.moveTo(cx + x * s, cy - y * s);
-        for (let i = 0; i < 260; i++) {
-          const [ex, ey] = field(cs, x, y), m = Math.hypot(ex, ey) || 1;
-          x += ex / m * 0.025; y += ey / m * 0.025;
-          ctx.lineTo(cx + x * s, cy - y * s);
-          if (cs.some(o => o.q < 0 && Math.hypot(x - o.x, y - o.y) < 0.05) || Math.abs(x) > 4 || Math.abs(y) > 4) break;
+        const a = PI / n + 2 * PI * k / n;
+        let x = c.x + Math.cos(a) * 0.12, y = c.y + Math.sin(a) * 0.12;
+        ctx.beginPath(); ctx.moveTo(...T(x, y));
+        for (let i = 0; i < 500; i++) {
+          const [ex, ey] = fieldAt(cs, x, y), m = Math.hypot(ex, ey) || 1;
+          const nx = x + ex / m * 0.02, ny = y + ey / m * 0.02;
+          if (onStep) onStep(x, y, nx, ny);
+          x = nx; y = ny; ctx.lineTo(...T(x, y));
+          if (cs.some(o => o.q < 0 && Math.hypot(x - o.x, y - o.y) < 0.1) || Math.abs(x) > 6 || Math.abs(y) > 4) break;
         }
         ctx.stroke();
       }
     }
-    for (const c of cs) {
-      const px = cx + c.x * s, py = cy - c.y * s, r = 9 + 5 * Math.abs(c.q);
-      const g = ctx.createRadialGradient(px - r * 0.3, py - r * 0.3, 1, px, py, r);
-      if (c.q > 0) { g.addColorStop(0, '#ffb0b0'); g.addColorStop(1, '#e23c3c'); } else { g.addColorStop(0, '#b5dcff'); g.addColorStop(1, '#2a77d6'); }
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * Math.PI); ctx.fill();
-      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath();
-      ctx.moveTo(px - r * 0.45, py); ctx.lineTo(px + r * 0.45, py);
-      if (c.q > 0) { ctx.moveTo(px, py - r * 0.45); ctx.lineTo(px, py + r * 0.45); }
+  }
+  function charge(ctx, T, s, x, y, q, r = 8) {
+    const [px, py] = T(x, y);
+    const g = ctx.createRadialGradient(px, py, 0, px, py, r * 3);
+    g.addColorStop(0, q > 0 ? 'rgba(255,93,93,0.35)' : 'rgba(77,163,255,0.35)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, r * 3, 0, 2 * PI); ctx.fill();
+    ctx.fillStyle = q > 0 ? '#ff5d5d' : '#4da3ff'; ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * PI); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6; ctx.beginPath();
+    ctx.moveTo(px - r * .45, py); ctx.lineTo(px + r * .45, py);
+    if (q > 0) { ctx.moveTo(px, py - r * .45); ctx.lineTo(px, py + r * .45); }
+    ctx.stroke();
+  }
+  function arrowTo(ctx, x0, y0, x1, y1, color, w = 1.6, head = 6) {
+    const a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.strokeStyle = ctx.fillStyle = color; ctx.lineWidth = w;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - Math.cos(a) * head * .6, y1 - Math.sin(a) * head * .6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - head * Math.cos(a - .4), y1 - head * Math.sin(a - .4));
+    ctx.lineTo(x1 - head * Math.cos(a + .4), y1 - head * Math.sin(a + .4)); ctx.closePath(); ctx.fill();
+  }
+  function grid(ctx, w, h, s, cx, cy) {
+    ctx.strokeStyle = 'rgba(42,50,66,0.35)'; ctx.lineWidth = 1; ctx.beginPath();
+    for (let x = cx % (s / 2); x < w; x += s / 2) { ctx.moveTo(Math.round(x) + .5, 0); ctx.lineTo(Math.round(x) + .5, h); }
+    for (let y = cy % (s / 2); y < h; y += s / 2) { ctx.moveTo(0, Math.round(y) + .5); ctx.lineTo(w, Math.round(y) + .5); }
+    ctx.stroke();
+  }
+  function contours(ctx, T, cs, levels, x0, x1, y0, y1, step) {
+    const nx = Math.ceil((x1 - x0) / step), ny = Math.ceil((y1 - y0) / step);
+    const V = []; for (let j = 0; j <= ny; j++) { V.push([]); for (let i = 0; i <= nx; i++) V[j].push(fieldAt(cs, x0 + i * step, y0 + j * step)[2]); }
+    ctx.lineWidth = 1;
+    for (const L of levels) {
+      ctx.strokeStyle = L === 0 ? 'rgba(220,255,230,0.5)' : 'rgba(87,227,137,0.45)';
+      ctx.beginPath();
+      for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+        const a = V[j][i], b = V[j][i + 1], c = V[j + 1][i + 1], d = V[j + 1][i];
+        const pts = [];
+        const edge = (p, q, xa, ya, xb, yb) => { if ((p > L) !== (q > L)) { const t = (L - p) / (q - p); pts.push([xa + (xb - xa) * t, ya + (yb - ya) * t]); } };
+        const X = x0 + i * step, Y = y0 + j * step;
+        edge(a, b, X, Y, X + step, Y); edge(b, c, X + step, Y, X + step, Y + step); edge(d, c, X, Y + step, X + step, Y + step); edge(a, d, X, Y, X, Y + step);
+        if (pts.length >= 2) { ctx.moveTo(...T(...pts[0])); ctx.lineTo(...T(...pts[1])); }
+        if (pts.length === 4) { ctx.moveTo(...T(...pts[2])); ctx.lineTo(...T(...pts[3])); }
+      }
       ctx.stroke();
     }
-    if (!reduce) { t += 1 / 60; requestAnimationFrame(frame); }
   }
-  frame();
-  if (reduce) new ResizeObserver(frame).observe(cv);
+
+  const DRAW = {
+    field(ctx, w, h, s, T) {
+      const cs = [{ x: -1.3, y: 0, q: 1 }, { x: 1.3, y: 0, q: -1 }];
+      contours(ctx, T, cs, [-2.2, -1.4, -0.9, -0.5, -0.2, 0, 0.2, 0.5, 0.9, 1.4, 2.2], -4.5, 4.5, -2.2, 2.2, 0.06);
+      lines(ctx, T, cs, 16);
+      for (const c of cs) charge(ctx, T, s, c.x, c.y, c.q, 9);
+      const [px, py] = T(0, 1.15), [ex, ey] = fieldAt(cs, 0, 1.15), m = Math.hypot(ex, ey);
+      ctx.strokeStyle = '#ffc95c'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(px, py, 6, 0, 2 * PI); ctx.stroke();
+      arrowTo(ctx, px, py, px + ex / m * 40, py - ey / m * 40, '#ffc95c', 2, 8);
+    },
+    gauss(ctx, w, h, s, T) {
+      const [cx, cy] = T(0, 0), R = s * 0.75, r = s * 1.35;
+      // charged sphere
+      const g = ctx.createRadialGradient(cx - R * .3, cy - R * .3, R * .1, cx, cy, R);
+      g.addColorStop(0, 'rgba(255,120,120,0.30)'); g.addColorStop(1, 'rgba(255,93,93,0.08)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * PI); ctx.fill();
+      let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+      for (let i = 0; i < 140; i++) {
+        const rr = R * Math.cbrt(rnd()) * 0.97, a = rnd() * 2 * PI;
+        ctx.fillStyle = 'rgba(255,110,110,0.9)'; ctx.beginPath(); ctx.arc(cx + rr * Math.cos(a), cy + rr * Math.sin(a) * 0.98, 1.4, 0, 2 * PI); ctx.fill();
+      }
+      // Gaussian sphere: outline, equator and meridian ellipses
+      ctx.strokeStyle = 'rgba(255,201,92,0.85)'; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * PI); ctx.stroke();
+      ctx.strokeStyle = 'rgba(255,201,92,0.35)'; ctx.lineWidth = 1;
+      for (const k of [0.32]) { ctx.beginPath(); ctx.ellipse(cx, cy, r, r * k, 0, 0, 2 * PI); ctx.stroke(); ctx.beginPath(); ctx.ellipse(cx, cy, r * k, r, 0, 0, 2 * PI); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(255,201,92,0.05)'; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * PI); ctx.fill();
+      for (let i = 0; i < 14; i++) {
+        const a = 2 * PI * i / 14 + 0.2;
+        arrowTo(ctx, cx + r * Math.cos(a), cy + r * Math.sin(a), cx + (r + s * 0.42) * Math.cos(a), cy + (r + s * 0.42) * Math.sin(a), 'rgba(255,201,92,0.9)', 1.6, 7);
+      }
+      ctx.fillStyle = 'rgba(228,231,238,0.7)'; ctx.font = '500 11px "Plex Mono", monospace';
+      if (w > 520) ctx.fillText('Φ = Q_enc / ε₀', cx + r + s * 0.5, cy + r * 0.95);
+      // small E(r) sketch on the left
+      const gx = w * 0.07, gy = h * 0.78, gw = w * 0.22, gh = h * 0.5;
+      ctx.strokeStyle = 'rgba(138,147,166,0.6)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(gx, gy - gh); ctx.lineTo(gx, gy); ctx.lineTo(gx + gw, gy); ctx.stroke();
+      ctx.strokeStyle = '#ffc95c'; ctx.lineWidth = 1.8; ctx.beginPath();
+      for (let i = 0; i <= 60; i++) { const u = i / 60 * 3, e = u < 1 ? u : 1 / (u * u); const X = gx + gw * u / 3, Y = gy - gh * 0.9 * e; i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); }
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(138,147,166,0.8)'; ctx.fillText('E(r)', gx + 4, gy - gh + 2);
+    },
+    flux(ctx, w, h, s, T) {
+      const cs = [{ x: -0.5, y: 0.1, q: 1 }, { x: 2.6, y: -0.3, q: -0.7 }];
+      const rad = th => 1.45 * (1 + 0.16 * Math.sin(3 * th) + 0.08 * Math.cos(2 * th + 1));
+      const inside = (x, y) => Math.hypot(x, y) < rad(Math.atan2(y, x));
+      ctx.beginPath();
+      for (let i = 0; i <= 200; i++) { const th = 2 * PI * i / 200, r = rad(th); const p = T(r * Math.cos(th), r * Math.sin(th)); i ? ctx.lineTo(...p) : ctx.moveTo(...p); }
+      ctx.closePath();
+      const [cx, cy] = T(0, 0);
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, s * 1.7);
+      g.addColorStop(0, 'rgba(255,138,61,0.28)'); g.addColorStop(1, 'rgba(255,138,61,0.10)');
+      ctx.fillStyle = g; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,201,92,0.85)'; ctx.lineWidth = 1.4; ctx.stroke();
+      const dots = [];
+      lines(ctx, T, cs, 16, 0.5, (x, y, nx, ny) => { if (inside(x, y) !== inside(nx, ny)) dots.push([nx, ny, inside(x, y)]); });
+      for (const [x, y, out] of dots) { const p = T(x, y); ctx.fillStyle = out ? '#ffe08a' : '#5fd0ff'; ctx.beginPath(); ctx.arc(p[0], p[1], 2.6, 0, 2 * PI); ctx.fill(); }
+      for (const c of cs) charge(ctx, T, s, c.x, c.y, c.q, 8);
+    },
+    dist(ctx, w, h, s, T) {
+      const N = 11, L = 3.6, yR = -1.15, P = [0, 0.15];
+      const [a0, b0] = T(-L / 2, yR), [a1] = T(L / 2, yR);
+      ctx.strokeStyle = 'rgba(255,93,93,0.25)'; ctx.lineWidth = 12; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(a0, b0); ctx.lineTo(a1, b0); ctx.stroke();
+      ctx.strokeStyle = 'rgba(255,93,93,0.9)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(a0, b0); ctx.lineTo(a1, b0); ctx.stroke();
+      const [px, py] = T(...P);
+      let sx = 0, sy = 0; const des = [];
+      for (let i = 0; i < N; i++) {
+        const x = -L / 2 + (i + 0.5) * L / N, dx = P[0] - x, dy = P[1] - yR, r2 = dx * dx + dy * dy, r = Math.sqrt(r2);
+        des.push([dx / (r2 * r), dy / (r2 * r), i / (N - 1), x]); sx += dx / (r2 * r); sy += dy / (r2 * r);
+      }
+      const maxd = Math.max(...des.map(d => Math.hypot(d[0], d[1]))), S = s * 0.85 / maxd;
+      for (const i of [2, N - 3]) { const q = T(des[i][3], yR); ctx.strokeStyle = 'rgba(228,231,238,0.25)'; ctx.setLineDash([3, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(px, py); ctx.stroke(); ctx.setLineDash([]); }
+      for (const [ex, ey, t, x] of des) {
+        const col = `hsla(${190 + 130 * t},90%,66%,0.8)`;
+        const q = T(x, yR); ctx.fillStyle = col; ctx.beginPath(); ctx.arc(q[0], q[1], 3, 0, 2 * PI); ctx.fill();
+        arrowTo(ctx, px, py, px + ex * S, py - ey * S, col, 1.2, 5);
+      }
+      const m = Math.hypot(sx, sy);
+      arrowTo(ctx, px, py, px + sx / m * s * 1.45, py - sy / m * s * 1.45, '#ffc95c', 2.6, 10);
+      ctx.strokeStyle = '#ffc95c'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(px, py, 6, 0, 2 * PI); ctx.stroke();
+      ctx.fillStyle = 'rgba(228,231,238,0.75)'; ctx.font = '500 11px "Plex Mono", monospace';
+      if (w > 520) ctx.fillText('E = ∫ k dq / r²', px + s * 0.55, py - s * 1.1);
+    }
+  };
+
+  function drawAll() {
+    document.querySelectorAll('canvas[data-kind]').forEach(cv => {
+      const ctx = cv.getContext('2d');
+      const { w, h } = EL.fitCanvas(cv, ctx);
+      ctx.fillStyle = '#06080c'; ctx.fillRect(0, 0, w, h);
+      const s = h / 3.8, cx = w / 2, cy = h / 2;
+      grid(ctx, w, h, s, cx, cy);
+      const T = (x, y) => [cx + x * s, cy - y * s];
+      DRAW[cv.dataset.kind](ctx, w, h, s, T);
+    });
+  }
+  let raf = 0;
+  const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(drawAll); };
+  new ResizeObserver(schedule).observe(document.querySelector('.tiles'));
+  if (document.fonts) document.fonts.ready.then(schedule);
 })();
 </script>
 </body>

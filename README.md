@@ -1,10 +1,10 @@
 # Electrostatics Lab — Gauss's Law & Electric Field Simulations
 
-Interactive simulations for **AP Physics C: Electricity & Magnetism**. It's a static site with no build step and no external CDNs (three.js and KaTeX are in `vendor/`), so it runs as-is on GitHub Pages.
+Interactive simulations for **AP Physics C: Electricity & Magnetism**. It's a static site with no build step and no external CDNs (three.js, KaTeX and IBM Plex fonts are in `vendor/`), so it runs as-is on GitHub Pages.
 
 | Page | What it does |
 | --- | --- |
-| `index.html` | Home page and a formula/concept sheet that links to each lab |
+| `index.html` | Launcher with a preview of each simulation |
 | `field.html` | **Electric Field Lab**: drag point charges and see field lines, a vector field, equipotentials and a potential heat map. Includes E/V probes, a two-point voltmeter (ΔV and work), Coulomb forces and test-charge motion with an energy-conservation readout. Presets include dipole, quadrupole, capacitor and charged rod. |
 | `gauss.html` | **Gauss's Law Lab** (3D): 13 symmetric distributions (point, uniform/non-uniform/conducting spheres, shell, charge in a conducting shell, line, cylinder, coax, sheet, slab, conducting plate, parallel-plate capacitor). Sweep the Gaussian surface and get live Q_enc, flux, E(r) and V(r) graphs plus a step-by-step derivation. |
 | `flux.html` | **3D Flux Explorer**: numerically integrates E·dA over a sphere, cube, cylinder, ellipsoid or irregular surface (~40–50k patches, refined near charges), so you can check that Φ = Q_enc/ε₀ for any shape. |

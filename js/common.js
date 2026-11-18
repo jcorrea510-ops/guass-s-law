@@ -68,10 +68,9 @@
 
   /* ---------- Navigation ---------- */
   const PAGES = [
-    { href: 'index.html', label: 'Home', id: 'home' },
-    { href: 'field.html', label: 'Electric Field Lab', id: 'field' },
-    { href: 'gauss.html', label: "Gauss's Law Lab", id: 'gauss' },
-    { href: 'flux.html', label: '3D Flux Explorer', id: 'flux' },
+    { href: 'field.html', label: 'Electric Field', id: 'field' },
+    { href: 'gauss.html', label: "Gauss's Law", id: 'gauss' },
+    { href: 'flux.html', label: 'Flux Explorer', id: 'flux' },
     { href: 'distributions.html', label: 'Continuous Charges', id: 'dist' }
   ];
   function buildNav(activeId) {
@@ -79,7 +78,7 @@
     if (!host) return;
     host.className = 'topnav';
     host.innerHTML =
-      '<a class="brand" href="index.html"><span class="logo">E</span><span>Electrostatics Lab</span></a>' +
+      '<a class="brand" href="index.html"><span class="logo"></span><span>Electrostatics Lab</span></a>' +
       '<button class="menu-btn" aria-label="Menu" aria-expanded="false">☰</button>' +
       '<nav class="navlinks">' +
       PAGES.map(p => `<a href="${p.href}" class="${p.id === activeId ? 'active' : ''}">${p.label}</a>`).join('') +

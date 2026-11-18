@@ -13,10 +13,6 @@
 
 <main class="lab three-col">
   <aside class="sidebar">
-    <div class="page-title">
-      <h1>Gauss's Law Lab</h1>
-      <p>Pick a charge distribution, then grow the Gaussian surface and watch Q<sub>enc</sub>, flux and E change.</p>
-    </div>
 
     <section class="panel">
       <h3><span class="dot"></span>Charge distribution</h3>
@@ -79,7 +75,6 @@
         <span><i style="background:var(--gauss)"></i>Gaussian surface</span>
         <span><i style="background:#57e389"></i>dA (area vector)</span>
       </div>
-      <p class="hint">Bright charges are <b>enclosed</b>; dim ones are outside. Drag to orbit, scroll/pinch to zoom.</p>
     </section>
   </aside>
 
@@ -91,7 +86,7 @@
 
   <aside class="rightcol">
     <section class="panel">
-      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Applying Gauss's law here</h3>
+      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Derivation</h3>
       <div class="region" id="regionBox"></div>
       <div class="formula" style="margin-top:8px"><span class="cap" id="stepCap1">1 · Flux through the Gaussian surface (symmetry)</span><span id="f1"></span></div>
       <div class="formula"><span class="cap">2 · Charge enclosed</span><span id="f2"></span></div>
@@ -107,19 +102,6 @@
       <div class="graph"><canvas id="graphV"></canvas></div>
       <p class="hint" id="vRefNote"></p>
     </section>
-    <details class="panel notes">
-      <summary>Gauss's law — key ideas</summary>
-      <div class="formula"><span data-tex="\Phi_E=\oint \vec E\cdot d\vec A=\dfrac{Q_{\text{enc}}}{\varepsilon_0}" data-display></span></div>
-      <ul>
-        <li>True for <b>any</b> closed surface — but only useful for finding E when symmetry makes E constant in magnitude and parallel (or perpendicular) to dA on each part of the surface.</li>
-        <li>Charges outside the surface contribute zero <i>net</i> flux, though they do change E at points on the surface.</li>
-        <li>Inside a conductor in electrostatic equilibrium E = 0, so any excess charge lives on its surfaces.</li>
-        <li>A charge in a cavity induces an equal and opposite charge on the cavity wall.</li>
-        <li>Just outside a conductor, E = σ/ε₀ (perpendicular to the surface).</li>
-        <li>E is continuous across a volume charge, but jumps by σ/ε₀ across a surface charge.</li>
-        <li><span data-tex="V(r)=-\int_{\text{ref}}^{r}\vec E\cdot d\vec\ell"></span> — the V graph is the (negative) area under the E graph.</li>
-      </ul>
-    </details>
   </aside>
 </main>
 

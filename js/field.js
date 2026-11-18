@@ -271,7 +271,7 @@
 
     // background
     const g = sctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h) * 0.7);
-    g.addColorStop(0, '#0b1124'); g.addColorStop(1, '#060914');
+    g.addColorStop(0, '#0a0d14'); g.addColorStop(1, '#06080c');
     sctx.fillStyle = g; sctx.fillRect(0, 0, w, h);
 
     const cs = state.charges;
@@ -957,6 +957,7 @@
   }
 
   new ResizeObserver(() => resize()).observe(stage);
+  if (document.fonts) document.fonts.ready.then(() => { dirtyStatic = true; });
   resize();
   loadPreset('dipole');
   requestAnimationFrame(frame);

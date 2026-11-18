@@ -274,7 +274,7 @@
     if (!cache) return;
     const { w, h } = view;
     const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h) * 0.7);
-    g.addColorStop(0, '#0b1124'); g.addColorStop(1, '#060914');
+    g.addColorStop(0, '#0a0d14'); g.addColorStop(1, '#06080c');
     ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
     drawGrid();
     const { list, sum } = cache;
@@ -560,6 +560,7 @@
   new ResizeObserver(resize).observe(stage);
   new ResizeObserver(() => cache && drawGraph()).observe($('graph'));
   setMode('rod');
+  if (document.fonts) document.fonts.ready.then(() => refresh());
 
   window.__dist = { state, exact, pieces, sumField, setMode, refresh };
 })();

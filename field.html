@@ -13,16 +13,12 @@
 
 <main class="lab">
   <aside class="sidebar">
-    <div class="page-title">
-      <h1>Electric Field Lab</h1>
-      <p>Drag charges. Watch the field lines, equipotentials and potential update instantly.</p>
-    </div>
 
     <section class="panel">
       <h3><span class="dot"></span>Charges</h3>
       <div class="btn-group">
-        <button class="btn pos" id="addPos">＋ Add +</button>
-        <button class="btn neg" id="addNeg">− Add −</button>
+        <button class="btn pos" id="addPos">Add +</button>
+        <button class="btn neg" id="addNeg">Add −</button>
         <button class="btn danger" id="clearAll">Clear</button>
       </div>
       <div class="row" style="margin-top:10px">
@@ -65,7 +61,7 @@
           <dt>Direction</dt><dd id="selFdir">—</dd>
         </dl>
       </div>
-      <p class="hint">Click a charge to select · drag to move · <kbd>Del</kbd> removes · arrow keys nudge.</p>
+      <p class="hint">Drag to move · <kbd>Del</kbd> removes · arrows nudge</p>
     </section>
 
     <section class="panel">
@@ -75,7 +71,7 @@
         <label class="check"><input type="checkbox" id="showVectors"><span class="swatch" style="background:#ffd166"></span>Field vectors</label>
         <label class="check"><input type="checkbox" id="showEqui" checked><span class="swatch" style="background:var(--equi)"></span>Equipotentials</label>
         <label class="check"><input type="checkbox" id="showHeat"><span class="swatch" style="background:linear-gradient(90deg,var(--neg),var(--pos))"></span>Potential map</label>
-        <label class="check"><input type="checkbox" id="showForces"><span class="swatch" style="background:#ff9f43"></span>Forces on charges</label>
+        <label class="check"><input type="checkbox" id="showForces"><span class="swatch" style="background:#ff9f43"></span>Forces</label>
         <label class="check"><input type="checkbox" id="showGrid" checked><span class="swatch" style="background:#33406a"></span>Grid &amp; axes</label>
         <label class="check"><input type="checkbox" id="vecLen"> Length ∝ |E|</label>
         <label class="check"><input type="checkbox" id="showLabels" checked> Charge labels</label>
@@ -110,7 +106,6 @@
         <dt>W<sub>ext</sub> to move +1 nC A→B</dt><dd id="pB_W">—</dd>
         <dt>W<sub>field</sub> = −qΔV</dt><dd id="pB_Wf">—</dd>
       </dl>
-      <p class="hint">Drag the yellow probes. ΔV is path-independent because the electrostatic field is conservative.</p>
     </section>
 
     <section class="panel">
@@ -139,22 +134,15 @@
         <dt>Total K + U</dt><dd id="t_E" class="big">—</dd>
         <dt>Energy drift</dt><dd id="t_drift">—</dd>
       </dl>
-      <p class="hint">Press <b>Launch…</b>, then press on the canvas and drag to aim the initial velocity (just click to release from rest). The test charge doesn't disturb the field.</p>
+      <p class="hint">Press Launch, then drag on the field to aim.</p>
     </section>
 
     <details class="panel notes">
-      <summary>Physics reference</summary>
+      <summary>Equations</summary>
       <div class="formula"><span class="cap">Coulomb's law</span><span data-tex="\vec F_{12} = k\dfrac{q_1 q_2}{r^2}\,\hat r_{12},\quad k=\dfrac{1}{4\pi\varepsilon_0}" data-display></span></div>
       <div class="formula"><span class="cap">Superposition of point-charge fields</span><span data-tex="\vec E(\vec r)=\sum_i k\dfrac{q_i}{|\vec r-\vec r_i|^2}\,\hat r_i,\qquad \vec F = q\vec E" data-display></span></div>
       <div class="formula"><span class="cap">Potential (V = 0 at infinity)</span><span data-tex="V(\vec r)=\sum_i k\dfrac{q_i}{|\vec r-\vec r_i|},\qquad U=qV" data-display></span></div>
       <div class="formula"><span class="cap">Field ↔ potential</span><span data-tex="\vec E=-\nabla V,\qquad \Delta V=-\int_A^B \vec E\cdot d\vec\ell" data-display></span></div>
-      <ul>
-        <li>Field lines start on + charges and end on − charges (or at infinity); the number of lines is proportional to the charge.</li>
-        <li>Line density ∝ field strength. Lines never cross.</li>
-        <li>Equipotentials are everywhere ⊥ to field lines; E points toward decreasing V.</li>
-        <li>Moving along an equipotential takes zero work.</li>
-        <li>A + test charge accelerates toward lower V; a − charge toward higher V. Total energy K + U is conserved.</li>
-      </ul>
     </details>
   </aside>
 
