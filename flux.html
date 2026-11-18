@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Flux Explorer</title>
+<meta name="description" content="Numerically integrate electric flux through any closed surface around 3D point charges and verify Gauss's law.">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="nav"></header>
+
+<main class="lab wide-side">
+  <aside class="sidebar">
+    <div class="page-title">
+      <h1>3D Flux Explorer</h1>
+      <p>Gauss's law holds for <b>any</b> closed surface. The flux here is computed by brute-force numerical integration of E·dA over tens of thousands of patches.</p>
+    </div>
+
+    <section class="panel">
+      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Result</h3>
+      <dl class="readout">
+        <dt>Φ<sub>E</sub> = ∮E·dA (numerical)</dt><dd id="r_flux" class="big hl-g">—</dd>
+        <dt>Q<sub>enc</sub></dt><dd id="r_qenc" class="big">—</dd>
+        <dt>Q<sub>enc</sub> / ε₀</dt><dd id="r_pred">—</dd>
+        <dt>Agreement</dt><dd id="r_err">—</dd>
+        <dt>Line crossings out / in</dt><dd id="r_lines">—</dd>
+      </dl>
+      <div class="formula" style="margin-top:8px"><span data-tex="\oint \vec E\cdot d\vec A \;=\; \sum_{\text{patches}} \vec E_i\cdot \Delta\vec A_i \;=\; \frac{Q_{\text{enc}}}{\varepsilon_0}" data-display></span></div>
+      <p class="hint" id="r_warn" style="color:var(--warn)"></p>
+    </section>
+
+    <section class="panel">
+      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Gaussian surface</h3>
+      <select id="shape" aria-label="Surface shape">
+        <option value="sphere">Sphere</option>
+        <option value="cube">Cube</option>
+        <option value="cylinder">Cylinder</option>
+        <option value="ellipsoid">Ellipsoid</option>
+        <option value="potato" selected>Irregular “potato”</option>
+      </select>
+      <div class="slider"><div class="top"><span>Size</span><b id="sizeVal"></b></div><input type="range" id="size" min="0.5" max="2.5" step="0.05" value="1.5"></div>
+      <div class="slider"><div class="top"><span>Centre x</span><b id="cxVal"></b></div><input type="range" id="cx" min="-3" max="3" step="0.05" value="0"></div>
+      <div class="slider"><div class="top"><span>Centre y</span><b id="cyVal"></b></div><input type="range" id="cy" min="-3" max="3" step="0.05" value="0"></div>
+      <div class="slider"><div class="top"><span>Centre z</span><b id="czVal"></b></div><input type="range" id="cz" min="-3" max="3" step="0.05" value="0"></div>
+      <div class="checks" style="margin-top:8px">
+        <label class="check"><input type="checkbox" id="optHeat" checked> E·n̂ colouring</label>
+        <label class="check"><input type="checkbox" id="optWire"> Wireframe</label>
+        <label class="check"><input type="checkbox" id="optLines" checked> Field lines</label>
+        <label class="check"><input type="checkbox" id="optCross" checked> Crossings</label>
+      </div>
+      <div style="margin-top:8px">
+        <div style="height:10px;border-radius:5px;background:linear-gradient(90deg,#2f7bff,#1b2850 50%,#ff8a3d)"></div>
+        <div class="row" style="justify-content:space-between;font-size:11.5px;color:var(--muted);margin-top:2px"><span>flux inward</span><span>E ∥ surface</span><span>flux outward</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3><span class="dot"></span>Point charges</h3>
+      <div class="btn-group">
+        <button class="btn pos" id="addPos">＋ Add +</button>
+        <button class="btn neg" id="addNeg">− Add −</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <select id="preset" aria-label="Preset">
+          <option value="">Presets…</option>
+          <option value="inside">One charge inside</option>
+          <option value="outside">One inside, one outside</option>
+          <option value="dipoleIn">Dipole fully inside (zero net charge)</option>
+          <option value="straddle">Dipole straddling the surface</option>
+          <option value="three">Three charges</option>
+        </select>
+      </div>
+      <table class="data" style="margin-top:10px" id="chargeTable">
+        <thead><tr><th>q</th><th>position (m)</th><th>where</th><th class="r">Φ<sub>i</sub> (N·m²/C)</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="selBox" style="display:none; margin-top:10px; border-top:1px solid var(--line); padding-top:8px">
+        <div class="row" style="justify-content:space-between"><b style="font-size:13.5px">Selected charge</b><button class="btn small danger" id="delSel">Delete</button></div>
+        <div class="slider"><div class="top"><span>q</span><b id="sqVal"></b></div><input type="range" id="sq" min="-10" max="10" step="0.5" value="5"></div>
+        <div class="slider"><div class="top"><span>x</span><b id="sxVal"></b></div><input type="range" id="sx" min="-4" max="4" step="0.05" value="0"></div>
+        <div class="slider"><div class="top"><span>y</span><b id="syVal"></b></div><input type="range" id="sy" min="-4" max="4" step="0.05" value="0"></div>
+        <div class="slider"><div class="top"><span>z</span><b id="szVal"></b></div><input type="range" id="sz" min="-4" max="4" step="0.05" value="0"></div>
+      </div>
+      <p class="hint">Drag charges directly in 3D (they move parallel to the screen). Drag empty space to orbit.</p>
+    </section>
+
+    <details class="panel notes">
+      <summary>What to notice</summary>
+      <ul>
+        <li>Change the <b>shape</b> or <b>size</b> of the surface: the total flux doesn't change as long as the same charges are enclosed.</li>
+        <li>A charge outside contributes <b>zero net flux</b>: the field lines it sends in come back out (blue patches balance orange ones).</li>
+        <li>But outside charges <b>do</b> change E on the surface — the colouring changes even though Φ does not.</li>
+        <li>Orange dots mark field lines leaving the surface, blue dots lines entering. Lines from an outside charge that enter always leave again.</li>
+        <li>Move a charge across the surface and watch Φ jump by q/ε₀.</li>
+      </ul>
+    </details>
+  </aside>
+
+  <div class="stage" id="stage">
+    <canvas id="cv3d" aria-label="3D flux view"></canvas>
+    <div class="toolbar"><button class="btn small" id="resetCam">Reset view</button></div>
+    <div class="hud bl" id="hud">Φ = …</div>
+  </div>
+</main>
+
+<script src="vendor/katex/katex.min.js"></script>
+<script src="js/common.js"></script>
+<script type="module" src="js/flux.js"></script>
+</body>
+</html>

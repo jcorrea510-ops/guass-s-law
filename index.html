@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electrostatics Lab</title>
+<meta name="description" content="Interactive Gauss's law and electric field simulations for AP Physics C: Electricity & Magnetism.">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .feature-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 8px; }
+  .feature-row .panel { padding: 14px; }
+  .feature-row b { display: block; font-size: 14px; margin-bottom: 4px; }
+  .feature-row span { color: var(--muted); font-size: 13px; }
+  .sheet .panel { display: flex; flex-direction: column; }
+  .sheet .panel .try { margin-top: auto; padding-top: 10px; font-size: 13.5px; font-weight: 600; }
+  .stats { display: flex; gap: 22px; margin-top: 22px; color: var(--muted); font-size: 13px; flex-wrap: wrap; }
+  .stats b { color: var(--text); font-size: 20px; display: block; }
+  @media (max-width: 960px) { .feature-row { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .feature-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header id="nav"></header>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <span class="tag">AP Physics C · Electricity &amp; Magnetism</span>
+      <h1>See the <span class="grad">electric field</span>.<br>Prove Gauss's law.</h1>
+      <p class="lead">Four interactive labs covering electrostatics: fields and field lines, potential and equipotentials, flux, Gauss's law for every symmetry, conductors, and continuous charge distributions — all computed live from the physics.</p>
+      <div class="cta">
+        <a class="btn primary" href="gauss.html">Open Gauss's Law Lab →</a>
+        <a class="btn" href="field.html">Electric Field Lab</a>
+      </div>
+      <div class="stats">
+        <div><b>13</b>Gauss's-law configurations</div>
+        <div><b>~45 000</b>patches per flux integral</div>
+        <div><b>0</b>installs — runs in the browser</div>
+      </div>
+    </div>
+    <canvas id="heroCv" aria-label="Animated electric field lines"></canvas>
+  </section>
+
+  <section class="cards">
+    <a class="card" href="field.html">
+      <div class="icon">⚡</div>
+      <h3>Electric Field Lab</h3>
+      <p>Drag point charges and watch the field update in real time.</p>
+      <ul>
+        <li>Field lines, vector field, equipotentials, potential map</li>
+        <li>E and V probes, voltmeter, work W = qΔV</li>
+        <li>Coulomb forces between charges</li>
+        <li>Launch test charges; K + U is conserved</li>
+      </ul>
+    </a>
+    <a class="card" href="gauss.html">
+      <div class="icon">◎</div>
+      <h3>Gauss's Law Lab</h3>
+      <p>Grow a Gaussian surface through a charge distribution in 3D.</p>
+      <ul>
+        <li>Spheres, cylinders, planes, coax, capacitor</li>
+        <li>Conductors, cavities and induced charge</li>
+        <li>Non-uniform density ρ = Ar</li>
+        <li>Live Q<sub>enc</sub>, flux, E(r), V(r) and derivation</li>
+      </ul>
+    </a>
+    <a class="card" href="flux.html">
+      <div class="icon">◈</div>
+      <h3>3D Flux Explorer</h3>
+      <p>Integrate E·dA numerically over any closed surface.</p>
+      <ul>
+        <li>Sphere, cube, cylinder, ellipsoid, irregular blob</li>
+        <li>Outside charges give zero net flux</li>
+        <li>Surface coloured by E·n̂; field-line crossings</li>
+      </ul>
+    </a>
+  </section>
+  <section class="cards" style="grid-template-columns: 1fr; margin-top: 0">
+    <a class="card" href="distributions.html" style="display:grid; grid-template-columns:auto 1fr; gap: 6px 18px; align-items:start">
+      <div class="icon" style="grid-row: span 2">∫</div>
+      <h3 style="margin:0">Continuous Charge Distributions</h3>
+      <p style="margin:0">Rod, ring, disk and arc: slice into dq, add every dE as a vector (tip-to-tail), and watch the Riemann sum converge to the exact integral — with the limiting cases (infinite line, sheet, point charge) on the graph.</p>
+    </a>
+  </section>
+
+  <section class="section">
+    <h2>Electrostatics, at a glance</h2>
+    <p class="sub">The core relationships you need for AP Physics C: E&amp;M — each linked to the lab where you can see it happen.</p>
+    <div class="sheet">
+      <div class="panel">
+        <h4>Coulomb's law &amp; superposition</h4>
+        <div class="formula"><span data-tex="\begin{gathered}\vec F = k\frac{q_1q_2}{r^2}\hat r\\ k=\frac{1}{4\pi\varepsilon_0}=8.99\times10^9\ \text{N}\cdot\text{m}^2/\text{C}^2\end{gathered}" data-display></span></div>
+        <p>Forces and fields from several charges add as <b>vectors</b>.</p>
+        <a class="try" href="field.html">Try it in the Electric Field Lab →</a>
+      </div>
+      <div class="panel">
+        <h4>Electric field</h4>
+        <div class="formula"><span data-tex="\vec E = \frac{\vec F}{q_0},\qquad \vec E=\int k\frac{dq}{r^2}\,\hat r" data-display></span></div>
+        <p>For continuous charge use <span data-tex="dq=\lambda\,d\ell,\ \sigma\,dA,\ \rho\,dV"></span> and exploit symmetry before integrating.</p>
+        <a class="try" href="distributions.html">Build one from dq →</a>
+      </div>
+      <div class="panel">
+        <h4>Electric flux &amp; Gauss's law</h4>
+        <div class="formula"><span data-tex="\Phi_E=\oint\vec E\cdot d\vec A=\frac{Q_{\text{enc}}}{\varepsilon_0}" data-display></span></div>
+        <p>Holds for every closed surface; it gives E directly only when symmetry makes E·dA simple.</p>
+        <a class="try" href="flux.html">Test any surface →</a>
+      </div>
+      <div class="panel">
+        <h4>Results from Gauss's law</h4>
+        <div class="formula"><span data-tex="\underbrace{E=\frac{kQ}{r^2}}_{\text{sphere, }r>R}\quad \underbrace{E=\frac{\lambda}{2\pi\varepsilon_0 r}}_{\text{line}}\quad \underbrace{E=\frac{\sigma}{2\varepsilon_0}}_{\text{sheet}}" data-display></span></div>
+        <div class="formula"><span data-tex="\text{Uniform sphere, } r<R:\ \ E=\frac{kQ}{R^3}\,r" data-display></span></div>
+        <a class="try" href="gauss.html">Sweep a Gaussian surface →</a>
+      </div>
+      <div class="panel">
+        <h4>Conductors in equilibrium</h4>
+        <p style="margin-top:0">E = 0 inside the metal · excess charge on the surface · the whole conductor is an equipotential · just outside, <span data-tex="E=\sigma/\varepsilon_0"></span> ⊥ surface · a charge in a cavity induces −q on the cavity wall.</p>
+        <a class="try" href="gauss.html#shellCavity">Charge inside a conducting shell →</a>
+      </div>
+      <div class="panel">
+        <h4>Electric potential</h4>
+        <div class="formula"><span data-tex="\begin{gathered}\Delta V=-\int_A^B\vec E\cdot d\vec\ell,\qquad \vec E=-\nabla V\\ V=\sum_i k\frac{q_i}{r_i}\end{gathered}" data-display></span></div>
+        <p>Potential energy <span data-tex="U=qV"></span>; work by the field <span data-tex="W=-q\Delta V"></span>. Equipotentials ⊥ field lines.</p>
+        <a class="try" href="field.html">Measure ΔV with the voltmeter →</a>
+      </div>
+      <div class="panel">
+        <h4>Capacitors</h4>
+        <div class="formula"><span data-tex="\begin{gathered}C=\frac{Q}{\Delta V},\qquad U=\tfrac12 CV^2\\ C_{\text{plates}}=\frac{\varepsilon_0A}{d},\qquad C_{\text{coax}}=\frac{2\pi\varepsilon_0 L}{\ln(b/a)}\end{gathered}" data-display></span></div>
+        <p>Find E with Gauss's law, integrate to get ΔV, then C = Q/ΔV.</p>
+        <a class="try" href="gauss.html#capacitor">Parallel plates in the Gauss Lab →</a>
+      </div>
+      <div class="panel">
+        <h4>Charges in motion</h4>
+        <div class="formula"><span data-tex="\vec a=\frac{q\vec E}{m},\qquad K_i+qV_i=K_f+qV_f" data-display></span></div>
+        <p>Positive charges accelerate toward lower V, negative charges toward higher V.</p>
+        <a class="try" href="field.html">Launch a test charge →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Electrostatics Lab — built for AP Physics C: Electricity &amp; Magnetism students. All fields are computed live in your browser from Coulomb's law and Gauss's law; nothing is pre-rendered.
+    Uses <a href="https://threejs.org">three.js</a> and <a href="https://katex.org">KaTeX</a>.
+  </footer>
+</div>
+
+<script src="vendor/katex/katex.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+EL.buildNav('home');
+EL.renderAllTex();
+// ---- animated hero: two orbiting charges with live field lines ----
+(function () {
+  const cv = document.getElementById('heroCv'), ctx = cv.getContext('2d');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let t = 0;
+  function charges(t) {
+    const a = t * 0.35;
+    return [
+      { x: Math.cos(a) * 0.9, y: Math.sin(a) * 0.55, q: 1 },
+      { x: -Math.cos(a) * 0.9, y: -Math.sin(a) * 0.55, q: -1 },
+      { x: 0.35 * Math.sin(a * 1.7), y: 1.25 + 0.15 * Math.cos(a), q: 0.6 }
+    ];
+  }
+  function field(cs, x, y) {
+    let ex = 0, ey = 0;
+    for (const c of cs) { const dx = x - c.x, dy = y - c.y, r2 = dx * dx + dy * dy + 1e-6, r = Math.sqrt(r2); ex += c.q * dx / (r2 * r); ey += c.q * dy / (r2 * r); }
+    return [ex, ey];
+  }
+  function frame() {
+    const { w, h } = EL.fitCanvas(cv, ctx);
+    const s = Math.min(w, h) / 4.2, cx = w / 2, cy = h / 2 + s * 0.25;
+    ctx.fillStyle = '#070b17'; ctx.fillRect(0, 0, w, h);
+    const cs = charges(t);
+    // equipotential-ish glow
+    for (const c of cs) {
+      const g = ctx.createRadialGradient(cx + c.x * s, cy - c.y * s, 0, cx + c.x * s, cy - c.y * s, s * 0.9);
+      g.addColorStop(0, c.q > 0 ? 'rgba(255,93,93,0.22)' : 'rgba(77,163,255,0.22)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    }
+    ctx.lineWidth = 1.2; ctx.strokeStyle = 'rgba(226,233,255,0.6)';
+    for (const c of cs) {
+      if (c.q <= 0) continue;
+      const n = Math.round(18 * c.q);
+      for (let k = 0; k < n; k++) {
+        const ang = 2 * Math.PI * (k + 0.5) / n + t * 0.1;
+        let x = c.x + Math.cos(ang) * 0.06, y = c.y + Math.sin(ang) * 0.06;
+        ctx.beginPath(); ctx.moveTo(cx + x * s, cy - y * s);
+        for (let i = 0; i < 260; i++) {
+          const [ex, ey] = field(cs, x, y), m = Math.hypot(ex, ey) || 1;
+          x += ex / m * 0.025; y += ey / m * 0.025;
+          ctx.lineTo(cx + x * s, cy - y * s);
+          if (cs.some(o => o.q < 0 && Math.hypot(x - o.x, y - o.y) < 0.05) || Math.abs(x) > 4 || Math.abs(y) > 4) break;
+        }
+        ctx.stroke();
+      }
+    }
+    for (const c of cs) {
+      const px = cx + c.x * s, py = cy - c.y * s, r = 9 + 5 * Math.abs(c.q);
+      const g = ctx.createRadialGradient(px - r * 0.3, py - r * 0.3, 1, px, py, r);
+      if (c.q > 0) { g.addColorStop(0, '#ffb0b0'); g.addColorStop(1, '#e23c3c'); } else { g.addColorStop(0, '#b5dcff'); g.addColorStop(1, '#2a77d6'); }
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, r, 0, 2 * Math.PI); ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.beginPath();
+      ctx.moveTo(px - r * 0.45, py); ctx.lineTo(px + r * 0.45, py);
+      if (c.q > 0) { ctx.moveTo(px, py - r * 0.45); ctx.lineTo(px, py + r * 0.45); }
+      ctx.stroke();
+    }
+    if (!reduce) { t += 1 / 60; requestAnimationFrame(frame); }
+  }
+  frame();
+  if (reduce) new ResizeObserver(frame).observe(cv);
+})();
+</script>
+</body>
+</html>

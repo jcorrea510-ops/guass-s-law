@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electric Field Lab</title>
+<meta name="description" content="Interactive electric field, field line, equipotential and potential simulator for AP Physics C: E&M.">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="nav"></header>
+
+<main class="lab">
+  <aside class="sidebar">
+    <div class="page-title">
+      <h1>Electric Field Lab</h1>
+      <p>Drag charges. Watch the field lines, equipotentials and potential update instantly.</p>
+    </div>
+
+    <section class="panel">
+      <h3><span class="dot"></span>Charges</h3>
+      <div class="btn-group">
+        <button class="btn pos" id="addPos">＋ Add +</button>
+        <button class="btn neg" id="addNeg">− Add −</button>
+        <button class="btn danger" id="clearAll">Clear</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label for="preset" style="flex:none">Preset</label>
+        <select id="preset" class="grow">
+          <option value="">Choose a configuration…</option>
+          <option value="single">Single positive charge</option>
+          <option value="singleNeg">Single negative charge</option>
+          <option value="dipole" selected>Electric dipole (+q, −q)</option>
+          <option value="like">Two like charges (+q, +q)</option>
+          <option value="unequal">Unequal charges (+2q, −q)</option>
+          <option value="quad">Quadrupole</option>
+          <option value="triangle">Equilateral triangle</option>
+          <option value="capacitor">Parallel-plate capacitor</option>
+          <option value="rod">Uniformly charged rod</option>
+          <option value="rodPoint">Charged rod + point charge</option>
+          <option value="random">Random</option>
+        </select>
+      </div>
+      <div class="row" style="margin-top:6px">
+        <label class="check"><input type="checkbox" id="snap" checked> Snap to 0.25 m grid</label>
+      </div>
+      <div class="row hint" style="margin-top:4px">Net charge: <b id="netQ" class="mono" style="color:var(--text)">0 nC</b> · <span id="nCharges">0</span> charges</div>
+
+      <div id="selBox" style="display:none; margin-top:10px; border-top:1px solid var(--line); padding-top:10px">
+        <div class="row" style="justify-content:space-between">
+          <b style="font-size:13.5px">Selected charge</b>
+          <button class="btn small danger" id="delSel">Delete</button>
+        </div>
+        <div class="slider">
+          <div class="top"><span>Charge q</span><b id="selQVal"></b></div>
+          <input type="range" id="selQ" min="-10" max="10" step="0.5" value="5">
+        </div>
+        <div class="row" style="margin-top:6px">
+          <label>x (m)</label><input type="number" id="selX" step="0.25" style="width:80px">
+          <label>y (m)</label><input type="number" id="selY" step="0.25" style="width:80px">
+        </div>
+        <dl class="readout" style="margin-top:8px">
+          <dt>Net force on it</dt><dd id="selF">—</dd>
+          <dt>Direction</dt><dd id="selFdir">—</dd>
+        </dl>
+      </div>
+      <p class="hint">Click a charge to select · drag to move · <kbd>Del</kbd> removes · arrow keys nudge.</p>
+    </section>
+
+    <section class="panel">
+      <h3><span class="dot" style="background:var(--equi);box-shadow:0 0 8px var(--equi)"></span>Display</h3>
+      <div class="checks">
+        <label class="check"><input type="checkbox" id="showLines" checked><span class="swatch" style="background:#e6ecff"></span>Field lines</label>
+        <label class="check"><input type="checkbox" id="showVectors"><span class="swatch" style="background:#ffd166"></span>Field vectors</label>
+        <label class="check"><input type="checkbox" id="showEqui" checked><span class="swatch" style="background:var(--equi)"></span>Equipotentials</label>
+        <label class="check"><input type="checkbox" id="showHeat"><span class="swatch" style="background:linear-gradient(90deg,var(--neg),var(--pos))"></span>Potential map</label>
+        <label class="check"><input type="checkbox" id="showForces"><span class="swatch" style="background:#ff9f43"></span>Forces on charges</label>
+        <label class="check"><input type="checkbox" id="showGrid" checked><span class="swatch" style="background:#33406a"></span>Grid &amp; axes</label>
+        <label class="check"><input type="checkbox" id="vecLen"> Length ∝ |E|</label>
+        <label class="check"><input type="checkbox" id="showLabels" checked> Charge labels</label>
+      </div>
+      <div class="slider">
+        <div class="top"><span>Field lines per nC</span><b id="densityVal"></b></div>
+        <input type="range" id="density" min="1" max="8" step="0.5" value="3">
+      </div>
+      <div class="slider">
+        <div class="top"><span>Equipotential spacing ΔV</span><b id="dVVal"></b></div>
+        <input type="range" id="dV" min="0" max="6" step="1" value="3">
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Probes &amp; Voltmeter</h3>
+      <div class="row">
+        <label class="check"><input type="checkbox" id="probeA" checked> Probe A</label>
+        <label class="check"><input type="checkbox" id="probeB"> Probe B (for ΔV)</label>
+      </div>
+      <dl class="readout" style="margin-top:8px">
+        <dt>Position A</dt><dd id="pA_pos">—</dd>
+        <dt>|E| at A</dt><dd id="pA_E" class="big hl-g">—</dd>
+        <dt>E<sub>x</sub></dt><dd id="pA_Ex">—</dd>
+        <dt>E<sub>y</sub></dt><dd id="pA_Ey">—</dd>
+        <dt>Direction θ</dt><dd id="pA_dir">—</dd>
+        <dt>Potential V<sub>A</sub></dt><dd id="pA_V" class="big">—</dd>
+      </dl>
+      <dl class="readout" id="pBbox" style="margin-top:8px; display:none; border-top:1px solid var(--line); padding-top:8px">
+        <dt>V<sub>B</sub></dt><dd id="pB_V">—</dd>
+        <dt>ΔV = V<sub>B</sub> − V<sub>A</sub></dt><dd id="pB_dV" class="big">—</dd>
+        <dt>W<sub>ext</sub> to move +1 nC A→B</dt><dd id="pB_W">—</dd>
+        <dt>W<sub>field</sub> = −qΔV</dt><dd id="pB_Wf">—</dd>
+      </dl>
+      <p class="hint">Drag the yellow probes. ΔV is path-independent because the electrostatic field is conservative.</p>
+    </section>
+
+    <section class="panel">
+      <h3><span class="dot" style="background:#c39bff;box-shadow:0 0 8px #c39bff"></span>Test charge motion</h3>
+      <div class="seg" id="testSign">
+        <button data-v="1" class="active">+1 nC</button>
+        <button data-v="-1">−1 nC</button>
+      </div>
+      <div class="slider">
+        <div class="top"><span>Mass m</span><b id="massVal"></b></div>
+        <input type="range" id="mass" min="0.2" max="5" step="0.1" value="1">
+      </div>
+      <div class="slider">
+        <div class="top"><span>Time scale</span><b id="tscaleVal"></b></div>
+        <input type="range" id="tscale" min="0.05" max="2" step="0.05" value="0.5">
+      </div>
+      <div class="btn-group" style="margin-top:8px">
+        <button class="btn primary" id="launchBtn">Launch…</button>
+        <button class="btn" id="pauseBtn">Pause</button>
+        <button class="btn" id="clearParticles">Clear</button>
+      </div>
+      <dl class="readout" style="margin-top:10px">
+        <dt>Speed v</dt><dd id="t_v">—</dd>
+        <dt>Kinetic K</dt><dd id="t_K">—</dd>
+        <dt>Potential U = qV</dt><dd id="t_U">—</dd>
+        <dt>Total K + U</dt><dd id="t_E" class="big">—</dd>
+        <dt>Energy drift</dt><dd id="t_drift">—</dd>
+      </dl>
+      <p class="hint">Press <b>Launch…</b>, then press on the canvas and drag to aim the initial velocity (just click to release from rest). The test charge doesn't disturb the field.</p>
+    </section>
+
+    <details class="panel notes">
+      <summary>Physics reference</summary>
+      <div class="formula"><span class="cap">Coulomb's law</span><span data-tex="\vec F_{12} = k\dfrac{q_1 q_2}{r^2}\,\hat r_{12},\quad k=\dfrac{1}{4\pi\varepsilon_0}" data-display></span></div>
+      <div class="formula"><span class="cap">Superposition of point-charge fields</span><span data-tex="\vec E(\vec r)=\sum_i k\dfrac{q_i}{|\vec r-\vec r_i|^2}\,\hat r_i,\qquad \vec F = q\vec E" data-display></span></div>
+      <div class="formula"><span class="cap">Potential (V = 0 at infinity)</span><span data-tex="V(\vec r)=\sum_i k\dfrac{q_i}{|\vec r-\vec r_i|},\qquad U=qV" data-display></span></div>
+      <div class="formula"><span class="cap">Field ↔ potential</span><span data-tex="\vec E=-\nabla V,\qquad \Delta V=-\int_A^B \vec E\cdot d\vec\ell" data-display></span></div>
+      <ul>
+        <li>Field lines start on + charges and end on − charges (or at infinity); the number of lines is proportional to the charge.</li>
+        <li>Line density ∝ field strength. Lines never cross.</li>
+        <li>Equipotentials are everywhere ⊥ to field lines; E points toward decreasing V.</li>
+        <li>Moving along an equipotential takes zero work.</li>
+        <li>A + test charge accelerates toward lower V; a − charge toward higher V. Total energy K + U is conserved.</li>
+      </ul>
+    </details>
+  </aside>
+
+  <div class="stage" id="stage">
+    <canvas id="cv" aria-label="Electric field canvas"></canvas>
+    <div class="hud bl" id="hud">Move the cursor over the field</div>
+    <div class="hud br" id="scaleHud">grid: 1 m</div>
+    <div class="toast" id="toast"></div>
+  </div>
+</main>
+
+<script src="vendor/katex/katex.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/field.js"></script>
+</body>
+</html>

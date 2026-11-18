@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Continuous Charges</title>
+<meta name="description" content="See how the electric field of a rod, ring, disk and arc is built from dq elements — numerical sum vs exact integral.">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="nav"></header>
+
+<main class="lab three-col">
+  <aside class="sidebar">
+    <div class="page-title">
+      <h1>Continuous Charge Distributions</h1>
+      <p>Chop the object into pieces dq, add up every dE as a vector, and watch the sum converge to the integral.</p>
+    </div>
+
+    <section class="panel">
+      <h3><span class="dot"></span>Object</h3>
+      <div class="seg" id="modeSeg">
+        <button data-m="rod" class="active">Rod</button>
+        <button data-m="ring">Ring</button>
+        <button data-m="disk">Disk</button>
+        <button data-m="arc">Arc</button>
+      </div>
+      <p class="hint" id="modeDesc" style="margin-top:8px"></p>
+      <div id="paramBox"></div>
+    </section>
+
+    <section class="panel">
+      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Riemann sum</h3>
+      <div class="slider"><div class="top"><span>Number of pieces N</span><b id="NVal"></b></div><input type="range" id="N" min="1" max="120" step="1" value="12"></div>
+      <div class="checks" style="margin-top:6px">
+        <label class="check"><input type="checkbox" id="optDE" checked> dE vectors</label>
+        <label class="check"><input type="checkbox" id="optChain"> Tip-to-tail sum</label>
+        <label class="check"><input type="checkbox" id="optComp" checked> Components</label>
+        <label class="check"><input type="checkbox" id="optPair" checked> Symmetric pair</label>
+      </div>
+      <dl class="readout" style="margin-top:10px">
+        <dt>Point P</dt><dd id="o_P">—</dd>
+        <dt>|E| from N pieces</dt><dd id="o_Enum" class="big hl-g">—</dd>
+        <dt>|E| exact (integral)</dt><dd id="o_Eex" class="big">—</dd>
+        <dt>Sum vs integral</dt><dd id="o_err">—</dd>
+        <dt>E<sub>x</sub>, E<sub>y</sub> (exact)</dt><dd id="o_comp">—</dd>
+        <dt>V at P (V(∞) = 0)</dt><dd id="o_V">—</dd>
+      </dl>
+      <p class="hint">Drag the point <b style="color:var(--gauss)">P</b>. Increase N and the sum approaches the exact integral.</p>
+    </section>
+  </aside>
+
+  <div class="stage" id="stage">
+    <canvas id="cv" aria-label="Continuous charge distribution canvas"></canvas>
+    <div class="hud tl" id="hud"></div>
+    <div class="hud br" id="scaleHud">grid: 0.5 m</div>
+  </div>
+
+  <aside class="rightcol">
+    <section class="panel">
+      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span>Setting up the integral</h3>
+      <div class="formula"><span class="cap" id="f1cap">1 · Field of one small piece</span><span id="f1"></span></div>
+      <div class="formula"><span class="cap" id="f2cap">2 · Use symmetry, then integrate</span><span id="f2"></span></div>
+      <div class="formula"><span class="cap">3 · Result</span><span id="f3"></span></div>
+      <div class="formula"><span class="cap">Potential (a scalar — no components needed)</span><span id="f4"></span></div>
+    </section>
+    <section class="panel">
+      <h3><span class="dot" style="background:var(--gauss);box-shadow:0 0 8px var(--gauss)"></span><span id="gTitle">Graph</span></h3>
+      <div class="graph" style="height:230px"><canvas id="graph"></canvas></div>
+      <div class="legend" id="gLegend" style="margin-top:8px"></div>
+      <p class="hint" id="gNote"></p>
+    </section>
+  </aside>
+</main>
+
+<script src="vendor/katex/katex.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/plot.js"></script>
+<script src="js/distributions.js"></script>
+</body>
+</html>
